@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    {% for item in orders %}
+        <h2>{{ item }}
+            {% if item.order_done == True %}
+                <i class="fa fa-check"></i>
+            {% else %}
+                <a href="/order/{{ item.id }}/done"><i class="fa fa-times"></i></a>
+                <small><---- mark as done</small>
+            {% endif %}
+
+        </h2>
+        <h5>by {{ item.order_client }} ({{ item.order_timestamp |timesince }} ago)</h5>
+        {% if item.order_done == False %}
+        {% endif %}
+
+        <ul>
+            {% for pizza_item in item.pizzas.all %}
+                <li>{{ pizza_item}} -> {% for topping in pizza_item.toppings.all %}{{ topping }}, {% endfor %}</li>
+            {% endfor %}
+            {% for sub_item in item.subs.all %}
+                <li>Sub: {{ sub_item.subtype }} {{ sub_item.subsize }}</li>
+            {% endfor %}
+            {% for pasta_item in item.pastas.all %}
+                <li>Pasta: {{ pasta_item.pastatype }}</li>
+            {% endfor %}
+            {% for salad_item in item.salads.all %}
+                <li>Salad: {{ salad_item.saladtype }}</li>
+            {% endfor %}
+            {% for platter_item in item.platters.all %}
+                <li>Platter: {{ platter_item.plattertype }} {{ platter_item.plattersize }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

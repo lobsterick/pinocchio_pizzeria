@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    {% if price_all == 0 %}
+        <h1>You don't have anything in cart</h1>
+    {% else %}
+        <div class="col-12">
+            <table class="table table-sm table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Product name</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if Pizza %}
+                    {% for item in Pizza %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if Sub %}
+                    {% for item in Sub %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if Platter %}
+                    {% for item in Platter %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if Pasta %}
+                    {% for item in Pasta %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if Salad %}
+                    {% for item in Salad %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>{{ item.price }} USD</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+
+            </table>
+            <h4 style="text-align:center">Overall price: {{ price_all }} USD</h4>
+            <div class="mt-2 col-md-12"></div>
+            <div class="mt-2 col-md-12"></div>
+
+            <div style="text-align: center;">
+                <a href="{% url "make_order" %}"><input class="btn btn-success btn-lg btn-block" type="button" value="Make order">
+                </a>
+            </div>
+
+            <div class="mt-2 col-md-12"></div>
+            <div class="mt-2 col-md-12"></div>
+
+            <div style="text-align: center;">
+                <a href="{% url "clear_cart" %}"><input class="btn-outline-danger btn-sm" type="button" value="Delete order">
+                </a>
+            </div>
+
+
+        </div>
+
+
+    {% endif %}
+{% endblock %}

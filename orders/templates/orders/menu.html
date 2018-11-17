@@ -1,0 +1,175 @@
+{% extends "layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert" style="text-align:center">
+                <h3>{{ message }}</h3>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% for item_menu in Pizza %}
+        <h2>{{ item_menu }} pizza</h2>
+        <div class="row">
+            <div class="col-8">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" width="70%">Name</th>
+                        <th scope="col" width="15%">Small</th>
+                        <th scope="col" width="15%">Large</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>Pizza with cheese</td>
+                        <td>{{ item_menu.price_sm_0 }} USD</td>
+                        <td>{{ item_menu.price_lg_0 }} USD</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>Pizza with one topping</td>
+                        <td>{{ item_menu.price_sm_1 }} USD</td>
+                        <td>{{ item_menu.price_lg_1 }} USD</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>Pizza with two toppings</td>
+                        <td>{{ item_menu.price_sm_2 }} USD</td>
+                        <td>{{ item_menu.price_lg_2 }} USD</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>Pizza with three toppings</td>
+                        <td>{{ item_menu.price_sm_3 }} USD</td>
+                        <td>{{ item_menu.price_lg_3 }} USD</td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>Special pizza</td>
+                        <td>{{ item_menu.price_sm_4 }} USD</td>
+                        <td>{{ item_menu.price_lg_4 }} USD</td>
+                    </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+            <div class="col-2" style="border: grey dotted">
+                <h2>Additions: </h2>
+                {% for topping in PizzaToppings %}
+                    {{ topping }},
+                {% endfor %}
+            </div>
+            <div class="col-2">
+                <h4> Order pizza:</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form_pizza | crispy }}
+                    <input type="hidden" name="pizzatype" value="{{ item_menu }}">
+                    <input type="submit" value="Save"/>
+                </form>
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+    <h1>Subs:</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" width="2%">Nr</th>
+            <th scope="col" width="78%">Name - <i>for additional cheese click "up-arrow" icon (+0,5USD)</i></th>
+            <th scope="col" width="10%">Small</th>
+            <th scope="col" width="10%">Large</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_menu in Sub %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item_menu }}</td>
+                {% if item_menu.only_big_size == 0 %}
+                    <td>{{ item_menu.small_price }} USD <a href="/add/sub/{{ item_menu.id }}/small/0"><i class="fas fa-plus-circle"></i></a><a href="/add/sub/{{ item_menu.id }}/small/1"><i
+                            class="fas fa-arrow-alt-circle-up"></i></a></td>
+                    <td>{{ item_menu.large_price }} USD <a href="/add/sub/{{ item_menu.id }}/large/0"><i class="fas fa-plus-circle"></i></a><a href="/add/sub/{{ item_menu.id }}/large/1"><i
+                            class="fas fa-arrow-alt-circle-up"></i></a></td>
+                {% else %}
+                    <td></td>
+                    <td>{{ item_menu.large_price }} USD <a href="/add/sub/{{ item_menu.id }}/large/0"><i class="fas fa-plus-circle"></i></a><a href="/add/sub/{{ item_menu.id }}/large/1"><i
+                            class="fas fa-arrow-alt-circle-up"></i></a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h1>Platters:</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" width="2%">Nr</th>
+            <th scope="col" width="78%">Name</th>
+            <th scope="col" width="10%">Small</th>
+            <th scope="col" width="10%">Large</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_menu in Platter %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item_menu }}</td>
+                <td>{{ item_menu.small_price }} USD <a href="/add/platter/{{ item_menu.id }}/small/0"><i class="fas fa-plus-circle"></i></a></td>
+                <td>{{ item_menu.large_price }} USD <a href="/add/platter/{{ item_menu.id }}/large/0"><i class="fas fa-plus-circle"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h1>Pasta:</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" width="2%">Nr</th>
+            <th scope="col" width="88%">Name</th>
+            <th scope="col" width="10%">Large</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_menu in Pasta %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item_menu }}</td>
+                <td>{{ item_menu.price }} USD <a href="/add/pasta/{{ item_menu.id }}/large/0"><i class="fas fa-plus-circle"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Salads:</h1>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col" width="2%">Nr</th>
+            <th scope="col" width="88%">Name</th>
+            <th scope="col" width="10%">Large</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_menu in Salad %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item_menu }}</td>
+                <td>{{ item_menu.price }} USD <a href="/add/salad/{{ item_menu.id }}/1/0"><i class="fas fa-plus-circle"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

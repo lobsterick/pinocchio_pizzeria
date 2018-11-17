@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% load crispy_forms_tags %}
+    <div class="mt-2 col-md-12"></div>
+
+    <div class="d-flex justify-content-center">
+
+        <form method="post" autocomplete="off" action="{% url "login_view" %}">
+            {% csrf_token %}
+
+            {{ form | crispy }}
+
+            <input type="submit" value="Log in">
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    </div>
+{% endblock %}

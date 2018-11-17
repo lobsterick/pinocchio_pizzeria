@@ -1,0 +1,38 @@
+body {
+    /*height: 100vh;*/
+    background-image: url("background.png");
+    min-height: 400px;
+    margin-bottom: 80px;
+    clear: both
+}
+
+.jumbotron {
+    background-color: #343a40;
+    color: white;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    align-items: center;
+}
+
+hr {
+    border-top: 5px solid white;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.post {
+    background-image: url("background_post.png");
+    padding: 20px;
+    border: 2px outset #000000;
+    border-radius: 5px;
+    margin: 10px;
+    width: 60%;
+    word-wrap: break-word;
+}
+
